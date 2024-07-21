@@ -2,22 +2,21 @@
 import subprocess
 import threading
 import uuid
-import minecraft_launcher_lib
 import customtkinter
 from vars import *
-
-
+import psutil
 #---------------------------------------------------
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
-
+max_ram = psutil.virtual_memory().total
+total_mem_gb = round(max_ram / (1024 ** 3))
 class MyApp(customtkinter.CTk):
     def __init__(self):
         super(MyApp,self).__init__()
         self.title("MyLauncher")
         self.geometry("600x650")
         self.iconbitmap(bitmap="rocket.ico")
-        self.resizable(False,False)
+        self.resizable(True,True)
         self.widget()
         self.grid()
         self.load_config_values()
@@ -94,6 +93,9 @@ class MyApp(customtkinter.CTk):
         self.tabview.pack(pady=5)
         self.launch_tab = self.tabview.add("Launch")
 
+        #self.sideframe = customtkinter.CTkFrame(self, corner_radius=10, fg_color="#141414")
+        #self.sideframe.pack(side=customtkinter.LEFT, fill=customtkinter.Y)
+
         #------------Launch Tab-----------------------------------------------------------------------------------------
 
         self.userLabel = customtkinter.CTkLabel(master=self.launch_tab,text=" Enter your Username:")
@@ -111,7 +113,7 @@ class MyApp(customtkinter.CTk):
 
         self.ram_value_label = customtkinter.CTkLabel(self.launch_tab,text="Объем оперативной памяти для запуска:")
         self.ram_value_label.grid(sticky="W")
-        self.ram_allocation_select = customtkinter.CTkSlider(self.launch_tab,width=300,from_= 1,to=8,command=self.sliding)
+        self.ram_allocation_select = customtkinter.CTkSlider(self.launch_tab,width=300,from_= 1,to=total_mem_gb,command=self.sliding)
     
         self.ram_allocation_select.grid(row=12, column=0, sticky="W", padx=10)
         #---------------------------------------------------------------------------------------------------------------
