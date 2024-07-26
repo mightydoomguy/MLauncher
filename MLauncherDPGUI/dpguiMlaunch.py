@@ -14,7 +14,7 @@ max_ram = psutil.virtual_memory().total
 total_mem_gb = round(max_ram / (1024 ** 3))
 class MyApp:
     def __init__(self):
-        dpg.create_viewport(title="SomeTitle", width=600, height=400)
+        dpg.create_viewport(title="Dlauncher", width=600, height=400)
         self.setup()
 
 

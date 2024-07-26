@@ -5,6 +5,7 @@ import uuid
 import customtkinter
 from vars import *
 import psutil
+from MLauncherDPGUI.mod_window.mod_mine_window import ModDownloaderApp
 #---------------------------------------------------
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
@@ -13,7 +14,7 @@ total_mem_gb = round(max_ram / (1024 ** 3))
 class MyApp(customtkinter.CTk):
     def __init__(self):
         super(MyApp,self).__init__()
-        self.title("MyLauncher")
+        self.title("MLauncher")
         self.geometry("600x650")
         self.iconbitmap(bitmap="rocket.ico")
         self.resizable(True,True)
@@ -88,6 +89,8 @@ class MyApp(customtkinter.CTk):
     def sliding(self,ram_value):
         self.ram_value = int(self.ram_allocation_select.get())
         self.ram_allocation_select_label.configure(text=self.ram_value)
+    def open_mod_window(self):
+        ModDownloaderApp.runMOD(self)
     def widget(self):
         self.tabview = customtkinter.CTkTabview(self)
         self.tabview.pack(pady=5)
@@ -158,6 +161,10 @@ class MyApp(customtkinter.CTk):
         #---------------------------------------------------------------------------------------------------------------
         self.open_dir_btn = customtkinter.CTkButton(self.launch_tab,width=100,height=50,text="open Minecraft Folder",command=self.open_mine_dir)
         self.open_dir_btn.grid(sticky="SW",padx=10,pady=10)
+
+        self.open_mod_btn = customtkinter.CTkButton(self.launch_tab, width=100, height=50, text="Mods",
+                                                    command=self.open_mod_window)
+        self.open_mod_btn.grid(sticky="SE", padx=10, pady=10)
 if __name__ == "__main__":
     app = MyApp()
     app.mainloop()
